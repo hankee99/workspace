@@ -1,0 +1,29 @@
+package bus;
+
+public class Buss {
+	
+	 public int[] setArray() {
+		 int[][] seat = {
+				 {1,4},
+				 {0,5},
+				 {3,6}
+		 };
+		 
+		 int[] arr = {1,2,4,3,5};
+		 
+		 for(int[] i : seat) {
+			 int a = arr[i[0]];
+			 int b = arr[i[1]];
+			 
+			 arr[i[1]] = a;
+			 arr[i[0]] = b;
+			 
+			 
+			 
+		 }
+		 
+		 return arr;
+		 
+	 }
+
+}

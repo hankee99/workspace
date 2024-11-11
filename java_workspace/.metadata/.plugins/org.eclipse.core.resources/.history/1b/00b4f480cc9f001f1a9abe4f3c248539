@@ -1,0 +1,78 @@
+package yunsp;
+
+import java.util.*;
+
+public class Yunspham {
+	
+	public void mode() {   //배열에서 최빈값 찾기
+		int[] arr = {0,1,1,2,3,3,4};
+		
+		int ans = 0;
+		int arrMax =0;
+		int cntMax =0;
+		
+		for(int i=0; i<arr.length; i++) {
+			if(arrMax < arr[i]) {
+				arrMax = arr[i];
+			}
+		}
+		
+		int[] copyarr = new int[arrMax +1];
+		
+		for(int i=0; i<arr.length; i++) {
+			copyarr[arr[i]]++;
+		}
+		
+		for(int i=0; i<copyarr.length; i++) {
+			if(cntMax < copyarr[i]) {
+				cntMax = copyarr[i];
+				ans = i;
+			}
+		}
+		
+		int cnt = 0;
+		for(int i=0; i<copyarr.length; i++) {
+			if(cntMax == copyarr[i]) {
+				cnt++;
+			}
+		}
+		
+		if(cnt>1) {
+			System.out.println(-1);
+		}else {
+			System.out.println(ans);
+		}
+		
+		
+		
+	}
+	
+	public void par() {
+		int[][] xy = {
+				{1,4},
+				{9,2},
+				{3,8},
+				{11,6}
+		};
+		
+		ArrayList<Double> arr = new ArrayList<>();
+		double[] cparr = new double[6];
+		
+		for(int i=0; i<3; i++) {
+			for(int j=0; j<3-i; j++) {
+				arr.add((double)(xy[i][1] - xy[j+i+1][1])/(xy[i][0]-xy[j+i+1][0]));
+			}
+		}
+		
+		for(int i=0; i<6; i++){   //ku리스트를 배열a에 복사
+            cparr[i] = arr.get(i);
+        }
+		
+		Arrays.sort(cparr);
+		
+		System.out.println(Arrays.toString(cparr));
+		
+		
+	}
+
+}

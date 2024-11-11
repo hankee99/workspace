@@ -1,0 +1,31 @@
+package excc;
+
+
+
+import bus.Buss;
+
+public class EXCCCC {
+
+	public static void main(String[] args) {
+		int[][] seat = {
+				 {1,4},
+				 {0,5},
+				 {3,6}
+		 };
+		 
+		 int[] arr = {1,2,4,3,5};
+		 
+		 for(int[] i : seat) {
+			 int a = arr[i[0]];
+			 int b = arr[i[1]];
+			 
+			 arr[i[0]] = b;
+			 arr[i[1]] = a;
+			 
+		 }
+		 
+		 System.out.println(arr);
+		 
+	}
+
+}

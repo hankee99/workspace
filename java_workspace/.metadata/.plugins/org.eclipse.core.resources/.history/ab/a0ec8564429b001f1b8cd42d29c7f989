@@ -1,0 +1,9 @@
+package kh.java.function;
+
+public class FunctionClass {
+	
+	public void test3() {
+		System.out.println("hiyio");
+	}
+
+}

@@ -1,0 +1,9 @@
+package bus;
+
+public class Buss {
+	
+	 public void setArray() {
+		 
+	 }
+
+}

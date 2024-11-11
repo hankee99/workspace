@@ -1,0 +1,17 @@
+package excc;
+
+
+
+import bus.Buss;
+
+public class EXCCCC {
+
+	public static void main(String[] args) {
+		Buss buss = new Buss();
+		int[] array = new int[buss.setArray().length-1];
+		array = buss.setArray();
+		System.out.println(array);
+		
+	}
+
+}

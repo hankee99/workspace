@@ -1,0 +1,25 @@
+package excc;
+
+import java.util.Collections;
+
+import bus.Buss;
+
+public class EXCCCC {
+
+	public static void main(String[] args) {
+		int[] array = new int[5];
+		array =Buss.setArray();
+		
+		System.out.println(array);
+		
+		
+			
+		
+		
+		
+		
+		
+		
+	}
+
+}

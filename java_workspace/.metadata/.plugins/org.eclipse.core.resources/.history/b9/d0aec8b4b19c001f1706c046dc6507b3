@@ -1,0 +1,16 @@
+package kh.java.func;
+
+import java.util.Scanner;
+
+public class Example {	
+	public void exam1() {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("첫번째 정수입력: ");
+		int a= sc.nextInt();
+		System.out.print("두번째 정수입력: ");
+		int b = sc.nextInt();
+		
+		System.out.printf("더하기: %d\n빼기: %d\n 곱하기: %d\n몫: \n나머지: %d",a+b,a-b,a*b,a/b,a%b);
+	}
+
+}

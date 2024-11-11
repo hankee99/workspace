@@ -1,0 +1,5 @@
+package com.khmarket.vo;
+
+public class Goods {
+
+}
