@@ -77,7 +77,7 @@ public class Yunspham {
 				return 1;
 			}
 		}
-		return 0;    //없으면 0반환 ㅇㅇ
+		return 0;    //없으면 0반환
 		
 	}
 
