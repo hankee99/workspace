@@ -138,11 +138,6 @@ public class Ifelse {
 		
 	}
 	
-	
-	
-	
-	
-	
 	public void test6() {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("숫자입력: ");

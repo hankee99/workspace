@@ -133,15 +133,9 @@ public class Ifelse {
 		int n2 =sc.nextInt();
 		
 		System.out.printf("%d ~ %d의 정수의 합: %d\n",n1,n2,(n2-n1+1)*(n1+n2)/2);
-
 		sc.close();
-		
+		System.out.println("===================================");
 	}
-	
-	
-	
-	
-	
 	
 	public void test6() {
 		Scanner sc = new Scanner(System.in);

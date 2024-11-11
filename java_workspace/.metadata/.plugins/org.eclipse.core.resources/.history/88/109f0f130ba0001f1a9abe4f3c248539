@@ -6,7 +6,7 @@ public class Run {
 
 	public static void main(String[] args) {
 		Ifelse ies = new Ifelse();
-		//ies.test5();
+		ies.test5();
 		ies.test6();
 
 	}
