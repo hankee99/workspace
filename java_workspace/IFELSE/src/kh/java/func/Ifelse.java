@@ -73,5 +73,77 @@ public class Ifelse {
 		sc.close();
 	}
 	
+	public void test4() {
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.print("정수를 입력하세요: ");
+		int num =sc.nextInt();
+		switch(num) {
+		case 1:
+			System.out.println("11");
+			break;
+		case 2:
+			System.out.println("22");
+			break;
+		case 3:
+			System.out.println("33");
+			break;
+		default :
+			System.out.println("1/2/3 중 입력하세요");
+		}
+		sc.close();
+		
+	}
+	
+	public void yoon_nyun() {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("년도를 입력하세요: ");
+		int year =sc.nextInt();
+		System.out.print("일수를 알고싶은 달을 입력하세요: ");
+		int num =sc.nextInt();
+		
+		
+		switch(num) {
+		case 4,6,9,11:
+			System.out.printf("%d년도 %d월달은 30일 까지 있습니다.",year,num);
+			break;
+		case 2:
+			if(year%4 == 0 && year%100 == 0) {
+				System.out.printf("%d년도 %d월달은 28일 까지 있습니다.",year,num);
+			}else if(year%4 == 0) {
+				System.out.printf("%d년도 %d월달은 29일 까지 있습니다.",year,num);
+			}else {
+				System.out.printf("%d년도 %d월달은 28일 까지 있습니다.",year,num);
+			}
+			
+			break;
+		default:
+			System.out.printf("%d년도 %d월달은 31일 까지 있습니다.",year,num);
+			break;
+		}
+		sc.close();
+		
+	}
+	
+	public void test5() {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("1숫자입력: ");
+		int n1 =sc.nextInt();
+		System.out.print("2숫자입력: ");
+		int n2 =sc.nextInt();
+		
+		System.out.printf("%d ~ %d의 정수의 합: %d",n1,n2,(n2-n1+1)*(n1+n2)/2);
+		sc.close();
+	}
+	
+	public void test6() {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("숫자입력: ");
+		int n =sc.nextInt();
+		
+		System.out.printf("짝수들의 합: %d",(n/2)*((n/2)+1));
+		sc.close();
+	}
+	
 
 }
