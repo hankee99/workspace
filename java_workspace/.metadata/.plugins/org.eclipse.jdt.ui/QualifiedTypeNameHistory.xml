@@ -13,10 +13,10 @@
     <fullyQualifiedTypeName name="java.awt.image.SampleModel"/>
     <fullyQualifiedTypeName name="kh.java.prac.Sample"/>
     <fullyQualifiedTypeName name="bus.Buss"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
-    <fullyQualifiedTypeName name="java.util.Arrays"/>
     <fullyQualifiedTypeName name="kh.java.func.Ifelse"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
-    <fullyQualifiedTypeName name="java.util.Scanner"/>
     <fullyQualifiedTypeName name="yunsp.Yunspham"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.Arrays"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
 </qualifiedTypeNameHistroy>
