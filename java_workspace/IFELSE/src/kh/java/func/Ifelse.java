@@ -167,5 +167,34 @@ public class Ifelse {
 		sc.close();
 	}
 	
+	public void test8() {
+		for(int i=2; i<10; i++) {
+			for(int j=1; j<10; j++) {
+				System.out.printf("%d * %d = %d\n",i,j,i*j);
+			}
+		}
+		
+	}
+	
+	public void test9() {
+		for(int i =0; i<5; i++) {
+			System.out.print(" ".repeat(i) + "*".repeat(9-2*i) + "\n");
+		}
+		for(int i=3; i>=0; i--) {
+			System.out.print(" ".repeat(i) + "*".repeat(9-2*i) + "\n");
+		}
+	}
+	
+	public void test10() {
+		for(int i =0; i<5; i++) {
+			System.out.print("*".repeat(i+1) + " ".repeat(9-2*i) + "*".repeat(i+1) + "\n");
+		}
+		
+		for(int i=3; i>=0; i--) {
+			System.out.print("*".repeat(i+1) + " ".repeat(9-2*i) + "*".repeat(i+1) + "\n");
+		}
+		 
+	}
+	
 
 }
