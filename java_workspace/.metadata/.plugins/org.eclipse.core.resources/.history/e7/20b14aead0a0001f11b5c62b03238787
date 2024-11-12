@@ -80,8 +80,5 @@ public class Yunspham {
 		return 0;    //없으면 0반환
 		
 	}
-	
-	
-	
 
 }
