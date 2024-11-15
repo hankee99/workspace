@@ -1,7 +1,6 @@
 package kh.java.ranfunc;
 
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class RandomTest {
 	public void test1() {
@@ -154,6 +153,78 @@ public class RandomTest {
 		
 		
 		sc.close();
+	}
+	
+	public void exam3() {
+		Scanner sc = new Scanner(System.in);
+		int[] usernum = new int[6];
+		int[] lotto = new int[6];
+		Random r = new Random();
+		System.out.println("==============로또=============");
+		for(int i=0; i<6; i++) {
+			int num;
+			while(true) {
+				System.out.print(i+1 + "번째 번호를 입력하세요: ");
+				num = sc.nextInt();
+				if(num>45 || num<1) {
+					System.out.println("1부터 45사이의 수를 입력해주세요.");
+				}else if(contains(usernum,num,i)) {
+					System.out.println("중복된 수입니다.");
+				}else {
+					usernum[i] = num;
+					break;
+				}
+						
+			}
+			
+		}
+		
+		int cnt =0;
+		while(cnt<6) {
+			int num = r.nextInt(45) + 1;
+			if(!contains(lotto,num,cnt)) {
+				lotto[cnt] = num;
+				
+				cnt++;
+			}
+		}
+		Arrays.sort(usernum);
+		Arrays.sort(lotto);
+		System.out.print("당첨번호: ");
+		for(int i =0; i<6; i++) {
+			System.out.print(lotto[i] + "\t");
+		}
+		System.out.println();
+		System.out.print("나의번호: ");
+		for(int i =0; i<6; i++) {
+			System.out.print(usernum[i] + "\t");
+		}
+		int inc=0;
+		for(int i=0; i<6;i++) {
+			for(int j=0; j<6; j++) {
+				if(lotto[i] == usernum[j]) {
+					inc++;
+				}
+			}
+		}
+		
+		System.out.printf("맞은개수: %d\n",inc);
+		
+		if(inc == 6) {
+			System.out.println("당첨입니다!");
+		}else {
+			System.out.println("꽝입니다!");
+		}
+		
+		
+		sc.close();
+	}
+
+	private boolean contains(int[] usernum, int num, int i) {
+		for(int k=0; k<=i; k++) {
+			if(num == usernum[k]) return true;
+		}
+		return false;
 	}
 
 }

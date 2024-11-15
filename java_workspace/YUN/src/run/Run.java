@@ -2,33 +2,34 @@ package run;
 
 
 
-import java.util.Scanner;
+import java.util.*;
 
 import yunsp.Yunspham;
 
 public class Run {
 
 	public static void main(String[] args) {
-		//Yunspham ys = new Yunspham();
-		
-		String s = "a b C";
-		int n = 4;
-		char[] carr = s.toCharArray();
-        for(char c : carr){
-            if((c>=65 && c<=90) || (c>=97 && c<=122)){ //c가 알파벳일때
-                if(((c+n) > 90) && ((c+n) <97)){       //대문자 c를 n만큼 밀었을때 90보다 크다면
-                    c = (char)(c+n -26);                       //알파벳 갯수(26)만큼 뺀다
-                }else if((c+n)>=65 && (c+n)<=90){      //아니라면 대문자 c를 n만큼 민다.
-                    c += n;
-                }else if((c+n)>122){                   //소문자 c를 n만큼 밀었을때 122보다 크다면
-                    c= (char)(c+n -26);                        //알파벳 갯수(26)만큼 뺀다
-                }else if(((c+n)>=97 && (c+n)<=122)){   //아니라면 소문자 c를 n만큼 민다.
-                    c += n;
+		String[] strings = {"sun", "bed", "car"};
+		int n =1;
+		String[] str = new String[strings.length];  //strings의 요소들의 n번째 알파벳을 담을 배열
+        for(int i=0; i<strings.length; i++){
+            str[i] = String.valueOf(strings[i].charAt(n));
+        }
+        Arrays.sort(str); // 알파벳들을 정렬
+        HashSet<String> set = new HashSet<>();
+        //String[] ans = new String[str.length];
+        System.out.println(Arrays.toString(str));
+        for(int i=0; i<str.length; i++){
+            for(int j=0; j<str.length; j++){
+                if(str[i].equals(String.valueOf(strings[j].charAt(n))) ){
+                    set.add(strings[j]);
                 }
             }
         }
         
-        System.out.println(carr);
+        
+        //Arrays.sort(ans);
+        
         
 
 	}
