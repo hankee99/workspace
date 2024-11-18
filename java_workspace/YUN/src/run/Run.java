@@ -1,37 +1,31 @@
 package run;
 
-
-
-import java.util.*;
+import java.util.Arrays;
 
 import yunsp.Yunspham;
 
 public class Run {
 
 	public static void main(String[] args) {
-		String[] strings = {"sun", "bed", "car"};
-		int n =1;
-		String[] str = new String[strings.length];  //strings의 요소들의 n번째 알파벳을 담을 배열
-        for(int i=0; i<strings.length; i++){
-            str[i] = String.valueOf(strings[i].charAt(n));
-        }
-        Arrays.sort(str); // 알파벳들을 정렬
-        HashSet<String> set = new HashSet<>();
-        //String[] ans = new String[str.length];
-        System.out.println(Arrays.toString(str));
-        for(int i=0; i<str.length; i++){
-            for(int j=0; j<str.length; j++){
-                if(str[i].equals(String.valueOf(strings[j].charAt(n))) ){
-                    set.add(strings[j]);
-                }
-            }
-        }
-        
-        
-        //Arrays.sort(ans);
-        
-        
+		String[] picture = {".x.","x..x","xx.xx"};
+		int k= 3;
+		
+		String[] answer = new String[picture.length * k];
 
+		for (int i = 0; i < picture.length; i++) {
+			StringBuilder sb = new StringBuilder();
+			for (int j = 0; j < picture[i].length(); j++) {
+				sb.append(String.valueOf(picture[i].charAt(j)).repeat(k));
+			}
+
+			for (int n = 0; n <=picture.length*k -k; n += k) {
+				for (int s = 0; s < k; s++) {
+					answer[s+n] = sb.toString();
+				}
+			}
+		}
+
+		System.out.println(Arrays.toString(answer));
 	}
 
 }
