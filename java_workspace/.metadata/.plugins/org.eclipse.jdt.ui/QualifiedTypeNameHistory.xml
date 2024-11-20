@@ -17,10 +17,15 @@
     <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
     <fullyQualifiedTypeName name="java.util.Random"/>
     <fullyQualifiedTypeName name="kh.java.test1.MethodTest1"/>
-    <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="yunsp.Yunspham"/>
     <fullyQualifiedTypeName name="java.util.Arrays"/>
-    <fullyQualifiedTypeName name="java.util.Scanner"/>
     <fullyQualifiedTypeName name="kh.java.test1.TV"/>
+    <fullyQualifiedTypeName name="kh.java.test3.NewTV"/>
+    <fullyQualifiedTypeName name="kh.java.student.Student"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="javax.annotation.processing.SupportedSourceVersion"/>
+    <fullyQualifiedTypeName name="kr.co.iei.student.controller.StudentController"/>
+    <fullyQualifiedTypeName name="kr.co.iei.student.vo.Student"/>
 </qualifiedTypeNameHistroy>
