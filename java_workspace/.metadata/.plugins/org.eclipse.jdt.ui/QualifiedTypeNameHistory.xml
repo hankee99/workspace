@@ -3,7 +3,6 @@
     <fullyQualifiedTypeName name="kh.java.function.FunctionClass"/>
     <fullyQualifiedTypeName name="gudp.GudpJegop"/>
     <fullyQualifiedTypeName name="kr.or.iei.vo.Information"/>
-    <fullyQualifiedTypeName name="kh.java.func.TestClass"/>
     <fullyQualifiedTypeName name="kh.java.func.VariableTest"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
     <fullyQualifiedTypeName name="kh.java.func.ScanTest"/>
@@ -40,8 +39,11 @@
     <fullyQualifiedTypeName name="java.lang.Object"/>
     <fullyQualifiedTypeName name="kh.java.func.TestClass2"/>
     <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
-    <fullyQualifiedTypeName name="java.util.Scanner"/>
     <fullyQualifiedTypeName name="kh.java.func.StringTest"/>
     <fullyQualifiedTypeName name="java.util.Arrays"/>
     <fullyQualifiedTypeName name="java.util.StringTokenizer"/>
+    <fullyQualifiedTypeName name="kh.java.func.Dday"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="kh.java.func.TestClass"/>
+    <fullyQualifiedTypeName name="kh.java.func.GenericEx1"/>
 </qualifiedTypeNameHistroy>
