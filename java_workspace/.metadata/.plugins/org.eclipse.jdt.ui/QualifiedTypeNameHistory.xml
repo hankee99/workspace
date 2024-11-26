@@ -14,12 +14,10 @@
     <fullyQualifiedTypeName name="kh.java.func.Ifelse"/>
     <fullyQualifiedTypeName name="java.lang.Integer"/>
     <fullyQualifiedTypeName name="kh.java.ranfunc.RandomTest"/>
-    <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
     <fullyQualifiedTypeName name="java.util.Random"/>
     <fullyQualifiedTypeName name="kh.java.test1.MethodTest1"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="yunsp.Yunspham"/>
-    <fullyQualifiedTypeName name="java.util.Arrays"/>
     <fullyQualifiedTypeName name="kh.java.test1.TV"/>
     <fullyQualifiedTypeName name="kh.java.test3.NewTV"/>
     <fullyQualifiedTypeName name="kh.java.student.Student"/>
@@ -27,11 +25,23 @@
     <fullyQualifiedTypeName name="javax.annotation.processing.SupportedSourceVersion"/>
     <fullyQualifiedTypeName name="kr.co.iei.student.controller.StudentController"/>
     <fullyQualifiedTypeName name="kr.co.iei.student.vo.Student"/>
-    <fullyQualifiedTypeName name="java.util.Scanner"/>
     <fullyQualifiedTypeName name="kr.co.iei.point.controller.PointController.PointController"/>
     <fullyQualifiedTypeName name="kr.co.iei.point.vo.Silver.Silver"/>
     <fullyQualifiedTypeName name="kr.co.iei.point.vo.Silver"/>
     <fullyQualifiedTypeName name="kr.co.iei.point.vo.Gold"/>
     <fullyQualifiedTypeName name="kr.co.iei.point.vo.Vip"/>
     <fullyQualifiedTypeName name="kr.co.iei.point.controller.PointController"/>
+    <fullyQualifiedTypeName name="kr.co.ie.point.controller.PointController"/>
+    <fullyQualifiedTypeName name="kr.co.iei.point.vo.Grade"/>
+    <fullyQualifiedTypeName name="kh.java.func.ObjectTest"/>
+    <fullyQualifiedTypeName name="kh.java.func.TestClass1"/>
+    <fullyQualifiedTypeName name="java.lang.Override"/>
+    <fullyQualifiedTypeName name="java.lang.Cloneable"/>
+    <fullyQualifiedTypeName name="java.lang.Object"/>
+    <fullyQualifiedTypeName name="kh.java.func.TestClass2"/>
+    <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="kh.java.func.StringTest"/>
+    <fullyQualifiedTypeName name="java.util.Arrays"/>
+    <fullyQualifiedTypeName name="java.util.StringTokenizer"/>
 </qualifiedTypeNameHistroy>
