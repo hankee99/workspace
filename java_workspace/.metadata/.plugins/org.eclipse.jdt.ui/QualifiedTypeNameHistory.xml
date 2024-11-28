@@ -47,12 +47,16 @@
     <fullyQualifiedTypeName name="kr.co.iei.student.vo.Student"/>
     <fullyQualifiedTypeName name="kr.co.ie.point.controller.PointController"/>
     <fullyQualifiedTypeName name="kr.co.ie.point.vo.Grade"/>
-    <fullyQualifiedTypeName name="java.util.Scanner"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="java.lang.Override"/>
     <fullyQualifiedTypeName name="java.net.FileNameMap"/>
     <fullyQualifiedTypeName name="kr.co.ie.point.vo.Gold"/>
     <fullyQualifiedTypeName name="kr.co.ie.point.vo.Vip"/>
     <fullyQualifiedTypeName name="kr.co.ie.point.controller.PointControllerImpl"/>
     <fullyQualifiedTypeName name="kr.co.ie.point.vo.Silver"/>
+    <fullyQualifiedTypeName name="hi.Cacheee"/>
+    <fullyQualifiedTypeName name="java.lang.ArrayIndexOutOfBoundsException"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.LinkedList"/>
+    <fullyQualifiedTypeName name="java.security.KeyStore.CallbackHandlerProtection"/>
 </qualifiedTypeNameHistroy>
