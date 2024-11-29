@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="kh.java.function.FunctionClass"/>
-    <fullyQualifiedTypeName name="gudp.GudpJegop"/>
     <fullyQualifiedTypeName name="kr.or.iei.vo.Information"/>
     <fullyQualifiedTypeName name="kh.java.func.VariableTest"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
@@ -12,7 +10,6 @@
     <fullyQualifiedTypeName name="bus.Buss"/>
     <fullyQualifiedTypeName name="kh.java.func.Ifelse"/>
     <fullyQualifiedTypeName name="kh.java.ranfunc.RandomTest"/>
-    <fullyQualifiedTypeName name="java.util.Random"/>
     <fullyQualifiedTypeName name="kh.java.test1.MethodTest1"/>
     <fullyQualifiedTypeName name="yunsp.Yunspham"/>
     <fullyQualifiedTypeName name="kh.java.test1.TV"/>
@@ -47,7 +44,6 @@
     <fullyQualifiedTypeName name="kr.co.iei.student.vo.Student"/>
     <fullyQualifiedTypeName name="kr.co.ie.point.controller.PointController"/>
     <fullyQualifiedTypeName name="kr.co.ie.point.vo.Grade"/>
-    <fullyQualifiedTypeName name="java.lang.Override"/>
     <fullyQualifiedTypeName name="java.net.FileNameMap"/>
     <fullyQualifiedTypeName name="kr.co.ie.point.vo.Gold"/>
     <fullyQualifiedTypeName name="kr.co.ie.point.vo.Vip"/>
@@ -55,8 +51,13 @@
     <fullyQualifiedTypeName name="kr.co.ie.point.vo.Silver"/>
     <fullyQualifiedTypeName name="hi.Cacheee"/>
     <fullyQualifiedTypeName name="java.lang.ArrayIndexOutOfBoundsException"/>
-    <fullyQualifiedTypeName name="java.util.Scanner"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="java.util.LinkedList"/>
     <fullyQualifiedTypeName name="java.security.KeyStore.CallbackHandlerProtection"/>
+    <fullyQualifiedTypeName name="java.lang.Override"/>
+    <fullyQualifiedTypeName name="java.util.HashSet"/>
+    <fullyQualifiedTypeName name="kh.java.func.TestData"/>
+    <fullyQualifiedTypeName name="java.util.Random"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="kh.java.func.Lotto"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>
