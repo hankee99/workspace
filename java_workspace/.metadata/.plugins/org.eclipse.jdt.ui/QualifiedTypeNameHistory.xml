@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="kr.or.iei.vo.Information"/>
     <fullyQualifiedTypeName name="kh.java.func.VariableTest"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
     <fullyQualifiedTypeName name="kh.java.func.ScanTest"/>
@@ -42,22 +41,23 @@
     <fullyQualifiedTypeName name="java.util.Arrays"/>
     <fullyQualifiedTypeName name="kr.co.iei.student.controller.StudentController"/>
     <fullyQualifiedTypeName name="kr.co.iei.student.vo.Student"/>
-    <fullyQualifiedTypeName name="kr.co.ie.point.controller.PointController"/>
-    <fullyQualifiedTypeName name="kr.co.ie.point.vo.Grade"/>
     <fullyQualifiedTypeName name="java.net.FileNameMap"/>
     <fullyQualifiedTypeName name="kr.co.ie.point.vo.Gold"/>
     <fullyQualifiedTypeName name="kr.co.ie.point.vo.Vip"/>
-    <fullyQualifiedTypeName name="kr.co.ie.point.controller.PointControllerImpl"/>
-    <fullyQualifiedTypeName name="kr.co.ie.point.vo.Silver"/>
     <fullyQualifiedTypeName name="hi.Cacheee"/>
     <fullyQualifiedTypeName name="java.lang.ArrayIndexOutOfBoundsException"/>
     <fullyQualifiedTypeName name="java.util.LinkedList"/>
     <fullyQualifiedTypeName name="java.security.KeyStore.CallbackHandlerProtection"/>
-    <fullyQualifiedTypeName name="java.lang.Override"/>
     <fullyQualifiedTypeName name="java.util.HashSet"/>
     <fullyQualifiedTypeName name="kh.java.func.TestData"/>
     <fullyQualifiedTypeName name="java.util.Random"/>
-    <fullyQualifiedTypeName name="java.util.Scanner"/>
     <fullyQualifiedTypeName name="kh.java.func.Lotto"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="kr.co.ie.point.controller.PointController"/>
+    <fullyQualifiedTypeName name="java.lang.Override"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="kr.co.ie.point.vo.Grade"/>
+    <fullyQualifiedTypeName name="java.util.HashMap"/>
+    <fullyQualifiedTypeName name="kr.co.ie.point.controller.PointControllerImpl"/>
+    <fullyQualifiedTypeName name="kr.co.ie.point.vo.Silver"/>
 </qualifiedTypeNameHistroy>
