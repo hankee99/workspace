@@ -63,5 +63,47 @@ public class FileTest {
 		
 		
 	}
+	
+	public void test3() {
+		Scanner sc= new Scanner(System.in);
+		System.out.println("저장할 파일명 입력: ");
+		String filename = sc.nextLine();
+		String onlyFilename = filename.substring(0,filename.lastIndexOf("."));
+		String extention = filename.substring(filename.lastIndexOf("."));
+		
+		String filepath = null;
+		int cnt = 0;
+		
+		while(true) {
+			if(cnt==0) {
+				filepath = filename;
+			}else {
+				filepath = onlyFilename + "_" + cnt + extention;
+			}
+			File file = new File("test/" + filepath);
+			
+			if(!file.exists()) break;
+			
+			cnt++;
+		}
+		
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream("test/" + filepath);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				fos.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+	}
 
 }
