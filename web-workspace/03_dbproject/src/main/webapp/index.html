@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DB 프로젝트</title>
+</head>
+<body>
+	<h1>DB 프로젝트-전한기</h1>
+	<hr>
+    <!-- 
+    전체회원조회
+    1.DB작업 필요한지 -> O
+    2.쿼리 : select * from member_tbl order by 1;
+    3.쿼리에 사용자에게 입력받아야할 데이터가 있는지 -> X
+        3-1. 사용자에게 입력받아야할 데이터가 있으면 -> 입력양식이 있는 페이지로 이동
+        3-2. 사용자에게 입력받아야할 데이터가 없으면 -> Servlet 호출
+    -->
+    <h3><a href="/allMember">1. 전체회원 조회</a></h3>
+    <!-- 
+    회원가입
+    1. DB작업 필요한지 -> O
+    2. 쿼리 : insert into member_tbl values(member_seq.nextval,?,?,?,?,?,3,to_char(sysdate,'yyyy-mm-dd'))
+    3. query에 사용자에게 입력받아야할 데이터 있는지 -> O (Id,Pw,Name,Phone,Addr)
+    -->
+    
+    <h3><a href="/html/joinFrm.html">2. 회원가입</a></h3>
+    <!-- 
+    
+    -->
+    <h3><a href="/html/selectOneMember.html">3. 아이디로 회원조회</a></h3>
+</body>
+</html>

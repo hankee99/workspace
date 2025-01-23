@@ -1,27 +1,22 @@
 package run;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.sql.*;
+import java.util.*;
+import java.util.stream.*;
 
 import yunsp.Yunspham;
 
 public class Run {
 
 	public static void main(String[] args) {
-		ArrayList<String> lst = new ArrayList<>();
-        int n = 4;
+		int bridge_length = 2;
+		int weight = 10;
+		int[] truck_weights = {7,4,5,6};
+		
+		System.out.println(Arrays.stream(truck_weights).sum());
         
-        for(int i=0; i<n; i++){
-            String str = String.valueOf(i+1).repeat(i+1);
-            for(int j=1; j<n-i; j++){
-                str += String.valueOf(i+j+1);
-            }
-            lst.add(str);
-        }
+		
         
-        for(String s : lst) {
-        	System.out.println(s);
-        }
 	}
 
 }
