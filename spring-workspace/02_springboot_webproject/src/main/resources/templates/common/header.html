@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<!-- 구글 아이콘 -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<!-- jquery -->
+<script src="/js/jquery-3.6.0.js"></script>
+<!-- 기본 CSS -->
+<link rel="stylesheet" href="/css/default.css" />
+<!-- 기본 js -->
+<script src="/js/default.js"></script>
+
+	<header class="header">
+		<div>
+			<div class="logo">
+				<a href="/">CHILLresource</a>
+			</div>
+			<nav class="nav">
+				<ul>
+					<li><a href="#">메뉴1</a></li>
+					<li><a href="#">menu2</a></li>
+					<li><a href="#">menu3</a></li>
+					<li><a href="#">menu4</a></li>
+					<li><a href="#">menu5</a>
+						<ul class="sub-menu">
+							<li><a href="#">menu5-1</a></li>
+							<li><a href="#">menu5-2</a></li>
+							<li><a href="#">menu5-3</a></li>
+							<li><a href="#">menu5-4</a></li>
+						</ul></li>
+				</ul>
+			</nav>
+
+			<ul class="user-menu">
+				<th:block th:if="${session.member == null}">
+					<li><a href="/member/loginFrm">로그인</a></li>
+					<li><a href="/member/joinFrm">회원가입</a></li>
+				</th:block>
+				<th:block th:if="${session.member != null}">
+					<li><a href="/member/mypage2" th:text="${session.member.memberName}"></a></li>
+					<li><a href="/member/logout">로그아웃</a></li>
+				</th:block>
+			</ul>
+		</div>
+	</header>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .mypage-wrap{
+            width: 800px;
+            margin: 0 auto;
+        }
+        .my-info-wrap{
+            width: 80%;
+            margin: 0 auto;
+        }
+        .my-info-wrap .input-item>input{
+            padding: 0;
+            border-bottom: none;
+        }
+        .mypage-btn{
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            padding: 30px 0px;
+        }
+    </style>
+    <script src="/js/sweetalert.min.js"></script>
+</head>
+<body>
+    <th:block th:include="common/header"></th:block>
+    <main class="content">
+        <section class="section mypage-wrap">
+            <div class="page-title">마이페이지</div>
+            <div class="my-info-wrap">
+                <form action="/member/update" method="post">
+                    <table class="tbl">
+                        <tr>
+                            <th width="30%">회원번호</th>
+                            <td width="70%" class="left" th:text="${member.memberNo}"></td>
+                        </tr>
+                        <tr>
+                            <th>아이디</th>
+                            <td class="left" th:text="${member.memberId}"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="memberPw">비밀 번호</label></th>
+                            <td class="left">
+                                <div class="input-item">
+                                    <input type="password" name="memberPw" id="memberPw" th:value="${member.memberPw}">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>이름</th>
+                            <td class="left" th:text="${member.memberName}"></td>
+                        </tr>
+                        <tr>
+                            <th>전화번호</th>
+                            <td class="left">
+                                <div class="input-item">
+                                    <input type="text" name="memberPhone" id="memberPhone" th:value="${member.memberPhone}">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>주소</th>
+                            <td class="left">
+                                <div class="input-item">
+                                    <input type="text" name="memberAddr" id="memberAddr" th:value="${member.memberAddr}">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>회원 등급</th>
+                            <td class="left" th:switch="${member.memberLevel}">
+                                <span th:case="1">관리자</span>
+                                <span th:case="2">정회원</span>
+                                <span th:case="3">준회원</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>가입일</th>
+                            <td class="left" th:text="${member.enrollDate}"></td>
+                        </tr>
+                    </table>
+                    <div class="mypage-btn">
+                        <button type="submit" class="btn-primary lg">정보수정</button>
+                        <button type="button" class="btn-secondary lg del-btn">회원탈퇴</button>
+                        <a th:if="${member.memberLevel == 1}" href="/admin/allMember" class="btn-point lg">관리자 페이지</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+    <script>
+        $(".del-btn").on("click", () => {
+            swal({
+                title : "회원 탈퇴",
+                text : "정말 회원을 탈퇴하시겠습니까?",
+                icon : "warning",
+                buttons : {
+                    cancle : {
+                        text : "취소",
+                        value : false,
+                        visible : true,
+                        className : "btn-secondary",
+                        closeModal : true
+                    },
+                    confirm : {
+                        text : "탈퇴하기",
+                        value : true,
+                        visible : true,
+                        className : "btn-primary",
+                        closeModal : true
+                    }
+                }
+            }).then(isConfirm => {
+                if(isConfirm) location.href = "/member/delete";
+            });
+        });
+    </script>
+    <th:block th:include="common/footer"></th:block>
+</body>
+</html>

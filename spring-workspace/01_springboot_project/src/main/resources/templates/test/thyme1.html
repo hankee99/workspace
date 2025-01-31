@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>타임리프 기본형 데이터 출력</h1>
+	<hr>
+	<h3 th:text="${str}"></h3>
+	<h3 th:text="${n1}"></h3>
+	<h3 th:text="${n2}"></h3>
+	<hr>
+	<input type="text" name="test" th:value="${n1 + n2}">
+	<h3 th:text="${n1+n2}"></h3>
+	<h3 th:text="${n1}+${n2}"></h3>
+	<h3 th:text="${n1}+${n2}+${str}"></h3>
+	<h3 th:text="${str}+${n1}+${n2}"></h3>
+	<h3 th:text="${str}+${n1}+${n2}+'ㅋㅋㅋㅋㄹ삥뽕'"></h3>
+</body>
+</html>

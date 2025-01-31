@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>타리 switch테스트</h1>
+	<hr>
+	<p th:if="${num == 100}">100</p>
+	<p th:if="${num == 200}">200</p>
+	<p th:if="${num == 300}">300</p>
+	<p th:if="${num == 400}">400</p>
+	<hr>
+	<th:block th:switch="${num}">
+		<p th:case="100">100</p>
+		<p th:case="200">200</p>
+		<p th:case="300">300</p>
+		<p th:case="400">400</p>
+		<p th:case="*">다 아님</p>
+	</th:block>
+</body>
+</html>
