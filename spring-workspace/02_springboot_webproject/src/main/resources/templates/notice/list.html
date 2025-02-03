@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+.tbl{
+	text-align: left;
+}
+.notice-list-wrap{
+	width: 1200px;
+	margin: 0 auto;
+}
+.list-tbl-wrap{
+	height: 500px;
+}
+#write-btn{
+	display: inline-block;
+}
+</style>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<main class="content">
+		<section class="section notice-list-wrap">
+			<div class="page-title">공지사항</div>
+			<div class="list-header">
+				<a th:if="${session.member != null && session.member.memberLevel == 1}" href="/notice/writeFrm" class="btn-primary" id="write-btn">글쓰기</a>
+			</div>
+			<div class="list-tbl-wrap">
+				<table class="tbl tbl-hover">
+					<tr>
+						<th style="width:10%">글번호</th>
+						<th style="width:45%">제목</th>
+						<th style="width:15%">작성자</th>
+						<th style="width:20%">작성일</th>
+						<th style="width:10%">조회수</th>
+					</tr>
+					<tr th:each="notc: ${list}">
+						<td th:text="${notc.noticeNo}"></td>
+						<td th:text="${notc.noticeTitle}"></td>
+						<td th:text="${notc.noticeWriter}"></td>
+						<td th:text="${notc.regDate}"></td>
+						<td th:text="${notc.readCount}"></td>
+					</tr>
+				</table>
+			</div>
+			<div id="pageNavi" th:utext="${pageNavi}"></div>
+		</section>
+	</main>
+	<script>
+	</script>
+	<th:block th:include="common/footer"></th:block>
+</body>
+</html>
