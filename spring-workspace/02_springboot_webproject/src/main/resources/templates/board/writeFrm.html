@@ -2,42 +2,37 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>공지사항 작성</title>
+<title>Insert title here</title>
 <style>
-	.notice-write-container{
+	.board-write-container{
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
-	.notice-write-wrap{
+	.board-write-wrap{
 		width: 1000px;
 	}
-	.notice-write-wrap .input-item>input[type=text]{
+	.board-write-wrap .input-item>input[type=text]{
 		border-bottom: none;
 		padding: 0;
 	}
-	.notice-write-wrap .input-item>textarea{
+	.board-write-wrap .input-item>textarea{
 		height: 300px;
 	}
 </style>
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
-	<main class="content notice-write-container">
-		<section class="section notice-write-wrap">
-			<div class="page-title">공지사항 작성</div>
-			<!--
-			첨부파일을 포함해서 전송하는 경우 
-			method = "post"
-			enctype = "multipart/form-data"
-			-->
-			<form action="/notice/write" method="post" enctype="multipart/form-data">
+	<main class="content board-write-container">
+		<section class="section board-write-wrap">
+			<div class="page-title">게시글 작성</div>
+			<form action="/board/write" method="post" enctype="multipart/form-data">
 				<table class="tbl">
 					<tr>
 						<th>제목</th>
 						<td colspan="3">
 							<div class="input-item">
-								<input type="text" name="noticeTitle">
+								<input type="text" name="boardTitle">
 							</div>
 						</td>
 					</tr>
@@ -45,7 +40,7 @@
 						<th style="width:10%">작성자</th>
 						<td style="width:40%">
 							<span th:text="${session.member.memberId}"></span>
-							<input type="hidden" name="noticeWriter" th:value="${session.member.memberId}">
+							<input type="hidden" name="boardWriter" th:value="${session.member.memberId}">
 						</td>
 						<th style="width: 10%">첨부파일</th>
 						<td style="width: 40%">
@@ -56,7 +51,7 @@
 					<tr>
 						<td colspan="4">
 							<div class="input-item">
-								<textarea name="noticeContent"></textarea>
+								<textarea name="boardContent"></textarea>
 							</div>
 						</td>
 					</tr>

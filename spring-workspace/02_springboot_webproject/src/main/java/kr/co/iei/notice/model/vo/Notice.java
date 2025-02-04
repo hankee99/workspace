@@ -1,5 +1,7 @@
 package kr.co.iei.notice.model.vo;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,4 +16,5 @@ public class Notice {
 	private String noticeContent;
 	private int readCount;
 	private String regDate;
+	private List<NoticeFile> fileList;
 }

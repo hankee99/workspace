@@ -38,7 +38,7 @@
 					</tr>
 					<tr th:each="notc: ${list}">
 						<td th:text="${notc.noticeNo}"></td>
-						<td th:text="${notc.noticeTitle}"></td>
+						<td><a th:href="@{/notice/view(noticeNo=${notc.noticeNo})}" th:text="${notc.noticeTitle}"></a></td>
 						<td th:text="${notc.noticeWriter}"></td>
 						<td th:text="${notc.regDate}"></td>
 						<td th:text="${notc.readCount}"></td>

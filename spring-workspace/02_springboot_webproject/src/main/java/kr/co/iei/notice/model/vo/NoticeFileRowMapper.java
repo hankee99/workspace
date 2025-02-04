@@ -14,8 +14,8 @@ public class NoticeFileRowMapper implements RowMapper<NoticeFile>{
 		NoticeFile f = new NoticeFile();
 		f.setNoticeFileNo(rs.getInt("notice_file_no"));
 		f.setNoticeNo(rs.getInt("notice_no"));
-		f.setFileName(rs.getString("file_name"));
-		f.setFilePath(rs.getString("file_path"));
+		f.setFilename(rs.getString("filename"));
+		f.setFilepath(rs.getString("filepath"));
 		return f;
 	}
 	

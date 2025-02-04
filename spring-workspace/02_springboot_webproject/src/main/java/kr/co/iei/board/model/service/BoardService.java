@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.iei.board.model.dao.BoardDao;
+import kr.co.iei.board.model.vo.Board;
+import kr.co.iei.board.model.vo.BoardFile;
 import kr.co.iei.board.model.vo.BoardListData;
 
 @Service
@@ -62,5 +64,16 @@ public class BoardService {
 		pageNavi += "</ul>";
 		BoardListData bld = new BoardListData(list,pageNavi);
 		return bld;
+	}
+
+	public int insertBoard(Board b, List<BoardFile> fileList) {
+		int boardNo = boardDao.newBoardNo();
+		b.setBoardNo(boardNo);
+		int result = boardDao.insertBoard(b);
+		for(BoardFile boardFile : fileList) {
+			boardFile.setBoardNo(boardNo);
+			result += boardDao.insertBoardFile(boardFile);
+		}
+		return result;
 	}
 }

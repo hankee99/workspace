@@ -3,12 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <title>자게</title>
+<style>
+.tbl{
+	text-align: left;
+}
+.board-list-wrap{
+	width: 1200px;
+	margin: 0 auto;
+}
+.list-tbl-wrap{
+	height: 500px;
+}
+#write-btn{
+	display: inline-block;
+}
+</style>
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
-		<section class="section">
+		<section class="section board-list-wrap">
 			<div class="page-title">자유게시판</div>
+			<div class="list-header">
+				<a th:if="${session.member != null}" href="/board/writeFrm" class="btn-primary" id="write-btn">글쓰기</a>
+			</div>
 			<div class="list-tbl-wrap">
 				<table class="tbl tbl-hover">
 					<tr>
@@ -18,7 +36,7 @@
 						<th style="width:20%">작성일</th>
 						<th style="width:10%">조회수</th>
 					</tr>
-					<tr th:each="board: ${list}">
+					<tr th:each="board: ${list}" th:onclick="toPost([[${board.boardNo}]]);">
 						<td th:text="${board.boardNo}"></td>
 						<td th:text="${board.boardTitle}"></td>
 						<td th:text="${board.boardWriter}"></td>
@@ -30,6 +48,11 @@
 			<div id="pageNavi" th:utext="${pageNavi}"></div>
 		</section>
 	</main>
+	<script>
+		function toPost(boardNo){
+			location.href = "/board/view?boardNo=" + boardNo;
+		}
+	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
 </html>

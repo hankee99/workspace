@@ -5,15 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import kr.co.iei.notice.model.dao.NoticeDao;
 import kr.co.iei.notice.model.vo.Notice;
+import kr.co.iei.notice.model.vo.NoticeFile;
 import kr.co.iei.notice.model.vo.NoticeListData;
 
 @Service
 public class NoticeService {
 	@Autowired
-	private NoticeDao dao;
+	private NoticeDao noticeDao;
 
 	public NoticeListData selectNoticeList(int reqPage) {
 		// reqPage : 사용자가 요청한 페이지 번호
@@ -28,13 +30,13 @@ public class NoticeService {
 		int end = reqPage * numPerPage;
 		int start = end - numPerPage + 1;
 		// 해당 요청 페이지에 게시물을 조회
-		List list = dao.selectNoticeList(start, end);
+		List list = noticeDao.selectNoticeList(start, end);
 		// 페이지 네비게이션(사용자가 클릭해서 다른페이지를 요청할 수 있도록하는 요소)
 		// 페이지 네비게이션을 Service에서 만드는 이유 -> 총게시물수, reqPage같은 데이터를 이용해서 만들어야하기 때문에
 		// 전체페이지 수를 계산 -> 총 게시물 수, 페이지당 게시물 수를 이용해서 연산
 		// 총 게시물 수 조회
 		// select count(*) from notice
-		int totalCount = dao.selectNoticeTotalCount();
+		int totalCount = noticeDao.selectNoticeTotalCount();
 		/*
 		 int totalPage = 0;
 		 if(totalCount%numPerPage == 0) {
@@ -99,8 +101,40 @@ public class NoticeService {
 	}
 	
 	@Transactional
-	public int insertNotice(Notice n) {
-		int result = dao.insertNotice(n);
+	public int insertNotice(Notice n, List<NoticeFile> fileList) {
+		int noticeNo = noticeDao.newNoticeNo();
+		n.setNoticeNo(noticeNo);
+		int result = noticeDao.insertNotice(n);
+		for(NoticeFile noticeFile : fileList) {
+			noticeFile.setNoticeNo(noticeNo);
+			result += noticeDao.insertNoticeFile(noticeFile);
+		}
+		
 		return result;
 	}
+	
+	@Transactional
+	public Notice selectOneNotice(int noticeNo) {
+		Notice n = noticeDao.selectOneNotice(noticeNo);
+		//조회수 올리는 작업
+		if(n != null) {
+			int result = noticeDao.updateReadCount(noticeNo);
+			//해당 게시글의 첨부파일을 조회
+			List fileList = noticeDao.selectNoticeFile(noticeNo);
+			n.setFileList(fileList);
+		}
+		return n;
+	}
+
+	public List<NoticeFile> deleteNotice(int noticeNo) {
+		//notice테이블을 삭제하면 첨부파일도 모두 지워지게 DB 외래키 설정
+		//-> notice를 지우면 파일정보를 알 수 없음 -> 삭제 전에 파일을 먼저 조회하고 삭제
+		//1. notice_file테이블에서 지우려는 공지사항의 첨부파일을 조회
+		List list = noticeDao.selectNoticeFile(noticeNo);
+		//2. notice테이블에서 해당 공지사항을 삭제(외래키 옵션으로 notice_file테이블의 데이터는 자동으로 삭제)
+		int result = noticeDao.deleteNotice(noticeNo);
+		
+		return list;
+	}
+	
 }
