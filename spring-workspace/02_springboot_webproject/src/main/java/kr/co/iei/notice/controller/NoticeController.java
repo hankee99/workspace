@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.iei.notice.model.service.NoticeService;
 import kr.co.iei.notice.model.vo.Notice;
+import kr.co.iei.notice.model.vo.NoticeComment;
 import kr.co.iei.notice.model.vo.NoticeFile;
 import kr.co.iei.notice.model.vo.NoticeListData;
 import kr.co.iei.util.FileUtils;
@@ -92,8 +93,8 @@ public class NoticeController {
 	}
 	
 	@GetMapping(value="/view")
-	public String selectOneNotice(int noticeNo, Model model) {
-		Notice n = noticeService.selectOneNotice(noticeNo);
+	public String selectOneNotice(int noticeNo,String check, Model model) {
+		Notice n = noticeService.selectOneNotice(noticeNo,check);
 		if(n == null) {
 			model.addAttribute("title", "게시글 조회실패");
 			model.addAttribute("text", "존재하지 않는 게시물입니다.");
@@ -132,6 +133,44 @@ public class NoticeController {
 		model.addAttribute("loc", "/notice/list?reqPage=1");
 		
 		return "common/msg";
+	}
+	
+	@GetMapping(value="/updateFrm")
+	public String updateFrm(int noticeNo, Model model) {
+		Notice n = noticeService.selectOneNotice(noticeNo, "1");
+		model.addAttribute("n",n);
+		return "notice/updateFrm";
+	}
+	
+	@PostMapping(value="/update")
+	public String update(Notice n, MultipartFile[] upfile, int[] delFileNo) {
+		//새로 추가한 파일을 업로드
+		List<NoticeFile> fileList = new ArrayList<NoticeFile>();
+		String savepath = root + "/notice/";
+		if(!upfile[0].isEmpty()) {
+			for(MultipartFile file : upfile) {
+				String filename = file.getOriginalFilename();
+				String filepath = fileUtils.upload(savepath, file);
+				NoticeFile noticeFile = new NoticeFile();
+				noticeFile.setFilename(filename);
+				noticeFile.setFilepath(filepath);
+				noticeFile.setNoticeNo(n.getNoticeNo());
+				fileList.add(noticeFile);
+			}
+		}
+		//수정 요청하면서 데이터 3개 전달(n : notice테이블 수정, fileList : notice_file insert, delFileNo : notice_file테이블에서 데이터를 삭제)
+		List<NoticeFile> delFileList= noticeService.updateNotice(n,fileList,delFileNo);
+		for(NoticeFile noticeFile : delFileList) {
+			File delFile = new File(savepath + noticeFile.getFilepath());
+			delFile.delete();
+		}
+		return "redirect:/notice/view?noticeNo=" + n.getNoticeNo() + "&check=1";
+	}
+	
+	@PostMapping(value="/insertComment")
+	public String insertComment(NoticeComment nc) {
+		int result = noticeService.insertNoticeComment(nc);
+		return "redirect:/notice/view?noticeNo=" + nc.getNoticeRef() + "&check=1";
 	}
 	
 	

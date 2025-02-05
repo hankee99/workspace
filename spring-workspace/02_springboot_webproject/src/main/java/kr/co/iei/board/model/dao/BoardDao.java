@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.co.iei.board.model.vo.Board;
+import kr.co.iei.board.model.vo.BoardFile;
 import kr.co.iei.board.model.vo.BoardFileRowMapper;
 import kr.co.iei.board.model.vo.BoardRowMapper;
 
@@ -39,8 +40,37 @@ public class BoardDao {
 	public int insertBoard(Board b) {
 		String query = "insert into board values(?,?,?,?,0,to_char(sysdate,'yyyy-mm-dd'))";
 		Object[] params = {b.getBoardNo(),b.getBoardTitle(),b.getBoardWriter(),b.getBoardContent()};
-		int result = jdbc.update(query,boardRowMapper,params);
+		int result = jdbc.update(query,params);
 		return result;
+	}
+	public int insertBoardFile(BoardFile boardFile) {
+		String query = "insert into board_file values(board_seq.nextval,?,?,?)";
+		Object[] params = {boardFile.getBoardNo(),boardFile.getFilename(),boardFile.getFilepath()};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+	public int updateReadCount(int boardNo) {
+		String query = "update board set read_count = read_count + 1 where board_no = ?";
+		Object[] params = {boardNo};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+	public Board selectOneBoard(int boardNo) {
+		String query = "select * from board where board_no = ?";
+		Object[] params = {boardNo};
+		List list = jdbc.query(query, boardRowMapper, params);
+		if(list.isEmpty()) {
+			return null;
+		}else {
+			Board b = (Board)list.get(0);
+			return b;
+		}
+	}
+	public List selectBoardFile(int boardNo) {
+		String query = "select * from board_file where board_no = ?";
+		Object[] params = {boardNo};
+		List list = jdbc.query(query, boardFileRowMapper, params);
+		return list;
 	}
 	
 }

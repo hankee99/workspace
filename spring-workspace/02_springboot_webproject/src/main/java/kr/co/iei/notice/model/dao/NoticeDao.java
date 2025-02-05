@@ -8,6 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.co.iei.notice.model.vo.Notice;
+import kr.co.iei.notice.model.vo.NoticeComment;
+import kr.co.iei.notice.model.vo.NoticeCommentRowMapper;
 import kr.co.iei.notice.model.vo.NoticeFile;
 import kr.co.iei.notice.model.vo.NoticeFileRowMapper;
 import kr.co.iei.notice.model.vo.NoticeRowMapper;
@@ -20,6 +22,8 @@ public class NoticeDao {
 	private NoticeRowMapper noticeRowMapper;
 	@Autowired
 	private NoticeFileRowMapper noticeFileRowMapper;
+	@Autowired
+	private NoticeCommentRowMapper noticeCommentRowMapper;
 	
 	public List selectNoticeList(int startNum, int endNum) {
 		String query = """
@@ -97,5 +101,49 @@ public class NoticeDao {
 		Object[] params = {noticeNo};
 		int result = jdbc.update(query,params);
 		return result;
+	}
+
+	public int updateNotice(Notice n) {
+		String query = "update notice set notice_title =? , notice_content =? where notice_no = ?";
+		Object[] params = {n.getNoticeTitle(), n.getNoticeContent(), n.getNoticeNo()};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
+	public NoticeFile selectOneNoticeFile(int noticeFileNo) {
+		String query = "select * from notice_file where notice_file_no = ?";
+		Object[] params = {noticeFileNo};
+		List list = jdbc.query(query, noticeFileRowMapper, params);
+		NoticeFile noticeFile = (NoticeFile)list.get(0);
+		return noticeFile;
+	}
+
+	public int deleteNoticeFile(int noticeFileNo) {
+		String query = "delete from notice_file where notice_file_no =?";
+		Object[] params = {noticeFileNo};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+
+	public int insertNoticeComment(NoticeComment nc) {
+		String query = "insert into notice_comment values(notice_comment_seq.nextval,?,?,to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'),?,?)";
+		String noticeCommentRef = nc.getNoticeCommentRef() == 0 ? null : String.valueOf(nc.getNoticeCommentRef());
+		Object[] params = {nc.getNoticeCommentWriter(),nc.getNoticeCommentContent(),nc.getNoticeRef(),noticeCommentRef};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
+	public List selectNoticeCommentList(int noticeNo) {
+		String query = "select * from notice_comment where notice_ref = ? and notice_comment_ref is null order by 1";
+		Object[] params = {noticeNo};
+		List list = jdbc.query(query, noticeCommentRowMapper, params);
+		return list;
+	}
+
+	public List selectNoticeReCommentList(int noticeNo) {
+		String query = "select * from notice_comment where notice_ref = ? and notice_comment_ref is not null order by 1";
+		Object[] params = {noticeNo};
+		List list = jdbc.query(query, noticeCommentRowMapper, params);
+		return list;
 	}
 }

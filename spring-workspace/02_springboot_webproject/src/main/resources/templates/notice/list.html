@@ -36,12 +36,12 @@
 						<th style="width:20%">작성일</th>
 						<th style="width:10%">조회수</th>
 					</tr>
-					<tr th:each="notc: ${list}">
-						<td th:text="${notc.noticeNo}"></td>
-						<td><a th:href="@{/notice/view(noticeNo=${notc.noticeNo})}" th:text="${notc.noticeTitle}"></a></td>
-						<td th:text="${notc.noticeWriter}"></td>
-						<td th:text="${notc.regDate}"></td>
-						<td th:text="${notc.readCount}"></td>
+					<tr th:each="notice: ${list}" th:onclick="toPost([[${notice.noticeNo}]]);">
+						<td th:text="${notice.noticeNo}"></td>
+						<td th:text="${notice.noticeTitle}"></td>
+						<td th:text="${notice.noticeWriter}"></td>
+						<td th:text="${notice.regDate}"></td>
+						<td th:text="${notice.readCount}"></td>
 					</tr>
 				</table>
 			</div>
@@ -49,6 +49,9 @@
 		</section>
 	</main>
 	<script>
+		function toPost(noticeNo){
+			location.href = "/notice/view?noticeNo=" + noticeNo;
+		}
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>

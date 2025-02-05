@@ -76,4 +76,15 @@ public class BoardService {
 		}
 		return result;
 	}
+
+	public Board selectOneBoard(int boardNo, String check) {
+		Board b = boardDao.selectOneBoard(boardNo);
+		if(check != null) {
+			int result = boardDao.updateReadCount(boardNo);
+		}
+		
+		List fileList = boardDao.selectBoardFile(boardNo);
+		b.setFileList(fileList);
+		return b;
+	}
 }

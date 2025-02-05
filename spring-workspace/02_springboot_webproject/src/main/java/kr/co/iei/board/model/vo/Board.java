@@ -1,5 +1,7 @@
 package kr.co.iei.board.model.vo;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +16,5 @@ public class Board {
 	private String boardContent;
 	private int readCount;
 	private String regDate;
-
+	private List<BoardFile> fileList;
 }

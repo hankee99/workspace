@@ -1,5 +1,6 @@
 package kr.co.iei.notice.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import kr.co.iei.notice.model.dao.NoticeDao;
 import kr.co.iei.notice.model.vo.Notice;
+import kr.co.iei.notice.model.vo.NoticeComment;
 import kr.co.iei.notice.model.vo.NoticeFile;
 import kr.co.iei.notice.model.vo.NoticeListData;
 
@@ -114,14 +116,22 @@ public class NoticeService {
 	}
 	
 	@Transactional
-	public Notice selectOneNotice(int noticeNo) {
+	public Notice selectOneNotice(int noticeNo, String check) {
 		Notice n = noticeDao.selectOneNotice(noticeNo);
-		//조회수 올리는 작업
 		if(n != null) {
-			int result = noticeDao.updateReadCount(noticeNo);
+			if(check == null) {
+				//조회수 올리는 작업
+				int result = noticeDao.updateReadCount(noticeNo);				
+			}
 			//해당 게시글의 첨부파일을 조회
 			List fileList = noticeDao.selectNoticeFile(noticeNo);
 			n.setFileList(fileList);
+			//댓글 조회
+			List commentList = noticeDao.selectNoticeCommentList(noticeNo);
+			n.setCommentList(commentList);
+			//대댓 조회
+			List reCommentList = noticeDao.selectNoticeReCommentList(noticeNo);
+			n.setReCommentList(reCommentList);
 		}
 		return n;
 	}
@@ -135,6 +145,36 @@ public class NoticeService {
 		int result = noticeDao.deleteNotice(noticeNo);
 		
 		return list;
+	}
+
+	@Transactional
+	public List<NoticeFile> updateNotice(Notice n, List<NoticeFile> fileList, int[] delFileNo) {
+		List<NoticeFile> delFileList = new ArrayList<NoticeFile>();
+		
+		//notice -> update
+		int result = noticeDao.updateNotice(n);
+		//notice_file insert(추가한 파일 있을때만)
+		for(NoticeFile noticeFile : fileList) {
+			result += noticeDao.insertNoticeFile(noticeFile);
+		}
+		//notice_file select(삭제한 파일 있을때만) -> DB에서 지워진 파일을 폴더에서도 삭제하기 위해 조회
+		//notice_file delete(삭제한 파일 있을때만)
+		//삭제한 파일이 없으면 name=delFileNo인 input이 전송에서 없기때문에 null이므로 체크
+		if(delFileNo != null) {
+			for(int noticeFileNo : delFileNo) {
+				NoticeFile noticeFile = noticeDao.selectOneNoticeFile(noticeFileNo);
+				delFileList.add(noticeFile);
+				result += noticeDao.deleteNoticeFile(noticeFileNo);
+			}
+		}
+		
+		return delFileList;
+	}
+	
+	@Transactional
+	public int insertNoticeComment(NoticeComment nc) {
+		int result = noticeDao.insertNoticeComment(nc);
+		return result;
 	}
 	
 }

@@ -73,5 +73,22 @@ public class BoardController {
 		return "common/msg";
 	}
 	
+	@GetMapping(value="/view")
+	public String selectOneBoard(int boardNo, String check, Model model) {
+		Board b = boardService.selectOneBoard(boardNo,check);
+		
+		if(b == null) {
+			model.addAttribute("title", "조회 실패");
+			model.addAttribute("text", "존재하지 않는 게시물입니다.");
+			model.addAttribute("icon", "warning");
+			model.addAttribute("loc", "/board/list?reqPage=1");
+			return "common/msg";
+		}else {
+			model.addAttribute("b", b);
+			return "board/view";
+		}
+	}
+	
+	
 	
 }

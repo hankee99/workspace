@@ -17,4 +17,6 @@ public class Notice {
 	private int readCount;
 	private String regDate;
 	private List<NoticeFile> fileList;
+	private List<NoticeComment> commentList;
+	private List<NoticeComment> reCommentList;
 }
