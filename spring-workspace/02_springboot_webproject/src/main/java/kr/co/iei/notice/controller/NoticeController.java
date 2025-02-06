@@ -173,6 +173,18 @@ public class NoticeController {
 		return "redirect:/notice/view?noticeNo=" + nc.getNoticeRef() + "&check=1";
 	}
 	
+	@GetMapping(value="/deleteComment")
+	public String deleteComment(NoticeComment nc) {
+		int result = noticeService.deleteNoticeComment(nc.getNoticeCommentNo());
+		return "redirect:/notice/view?noticeNo=" + nc.getNoticeRef() + "&check=1";
+	}
+	
+	@PostMapping(value="/updateComment")
+	public String updateComment(NoticeComment nc) {
+		int result = noticeService.updateNoticeComment(nc);
+		return "redirect:/notice/view?noticeNo=" + nc.getNoticeRef() + "&check=1";
+	}
+	
 	
 	
 	

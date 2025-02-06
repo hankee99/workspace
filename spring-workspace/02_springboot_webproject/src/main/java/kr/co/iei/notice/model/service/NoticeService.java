@@ -177,4 +177,16 @@ public class NoticeService {
 		return result;
 	}
 	
+	@Transactional
+	public int deleteNoticeComment(int noticeCommentNo) {
+		int result = noticeDao.deleteNoticeComment(noticeCommentNo);
+		return result;
+	}
+	
+	@Transactional
+	public int updateNoticeComment(NoticeComment nc) {
+		int result = noticeDao.updateNoticeComment(nc);
+		return result;
+	}
+	
 }

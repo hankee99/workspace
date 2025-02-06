@@ -146,4 +146,18 @@ public class NoticeDao {
 		List list = jdbc.query(query, noticeCommentRowMapper, params);
 		return list;
 	}
+
+	public int deleteNoticeComment(int noticeCommentNo) {
+		String query = "delete from notice_comment where notice_comment_no = ?";
+		Object[] params = {noticeCommentNo};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+
+	public int updateNoticeComment(NoticeComment nc) {
+		String query = "update notice_comment set notice_comment_content = ? where notice_comment_no = ?";
+		Object[] params = {nc.getNoticeCommentContent(),nc.getNoticeCommentNo()};
+		int result = jdbc.update(query,params);
+		return result;
+	}
 }

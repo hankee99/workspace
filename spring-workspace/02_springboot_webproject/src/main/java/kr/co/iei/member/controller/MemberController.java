@@ -10,6 +10,7 @@ import kr.co.iei.member.model.vo.Member;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import jakarta.servlet.http.HttpSession;
@@ -157,6 +158,12 @@ public class MemberController {
 		return "common/msg";
 	}
 	
+	@ResponseBody
+	@GetMapping(value= "/ajaxCheckId")
+	public boolean ajaxCheckId(String memberId) {
+		Member m = memberService.selectOneMember(memberId);
+		return m == null;
+	}
 	
 	
 	

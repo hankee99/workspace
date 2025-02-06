@@ -11,18 +11,13 @@
 	.noticeContent{
 		min-height: 300px;
 	}
-	.posting-comment .comment-link>a{
-		display : inline-block;
-		width: 60px;
-		cursor: pointer;
-	}
 </style>
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="section notice-view-wrap">
-			<div class="page-title">공지사항</div>
+			<div class="page-title" onclick="toList();" style="cursor: pointer;">공지사항</div>
 			<table class="tbl">
 				<tr>
 					<th colspan="6" th:text="${n.noticeTitle}"></th>
@@ -88,8 +83,17 @@
 				  		<span th:text="${nc.noticeCommentDate}"></span>
 				  	</p>
 				  	<p class="comment-content" th:text="${nc.noticeCommentContent}"></p>
+				  	<div class="input-item" style="display: none;" th:if="${session.member != null && session.member.memberId == nc.noticeCommentWriter}">
+				  		<textarea name="noticeCommentContent"></textarea>
+				  	</div>
 				  	<p class="comment-link">
-				  		<a th:if="${session.member != null}" class="recShow">답글달기</a>
+				  		<th:block th:if="${session.member != null}">
+				  			<th:block th:if="${session.member.memberId == nc.noticeCommentWriter}">
+						  		<a th:onclick="modifyComment(this,[[${n.noticeNo}]],[[${nc.noticeCommentNo}]]);">수정</a>
+						  		<a th:onclick="deleteComment([[${n.noticeNo}]],[[${nc.noticeCommentNo}]]);">삭제</a>
+				  			</th:block>
+				  			<a class="recShow">답글달기</a>
+				  		</th:block>
 				  	</p>
 				  </li>
 				</ul>
@@ -105,8 +109,14 @@
 				  		<span th:text="${ncc.noticeCommentDate}"></span>
 				  	</p>
 				  	<p class="comment-content" th:text="${ncc.noticeCommentContent}"></p>
+				  	<div class="input-item" style="display: none;" th:if="${session.member != null && session.member.memberId == ncc.noticeCommentWriter}">
+				  		<textarea name="noticeCommentContent"></textarea>
+				  	</div>
 				  	<p class="comment-link">
-				  		
+				  		<th:block th:if="${session.member != null && session.member.memberId == ncc.noticeCommentWriter}">
+						  	<a th:onclick="modifyComment(this,[[${n.noticeNo}]],[[${ncc.noticeCommentNo}]]);">수정</a>
+						  		<a th:onclick="deleteComment([[${n.noticeNo}]],[[${ncc.noticeCommentNo}]]);">삭제</a>
+				  		</th:block>
 				  	</p>
 				  </li>
 				</ul>
@@ -136,6 +146,10 @@
 	</main>
 	<script src="/js/sweetalert.min.js"></script>
 	<script>
+		function toList(){
+			location.href="/notice/list?reqPage=1";
+		}
+	
 		function noticeDelete(noticeNo){
 			swal({
 				title : "게시글 삭제",
@@ -174,6 +188,80 @@
 			
 			$(".inputRecommentBox").eq(index).toggle();
 		});
+		
+		function modifyComment(obj,noticeNo,noticeCommentNo){
+			const content = $(obj).parent().prev().prev().text();
+			$(obj).parent().prev().children().text(content);
+			//화면에 출력되고있는 현재 댓글 내용을 숨기
+			$(obj).parent().prev().prev().hide();
+			$(obj).parent().prev().show();
+			
+			$(obj).text("수정완료");
+			$(obj).attr("onclick","modifyComplete(this,"+noticeNo+","+noticeCommentNo+");");
+			
+			$(obj).next().text("수정취소");
+			$(obj).next().attr("onclick","modifyCancle(this,"+noticeNo+","+noticeCommentNo+");");
+			$(obj).next().next().hide();
+			
+			
+		}
+		
+		function modifyComplete(obj,noticeNo,noticeCommentNo){
+			//form태그르 생성해서 필요한 태그들을 모두 생성해서 넣은 후 submit
+			//1. form태그 생성
+			const form =$("<form>");
+			form.attr("action","/notice/updateComment");
+			form.attr("method","post");
+			form.hide(); 
+			//2. form태그 내부에 전송하고 싶은 데이터를 태그로 삽입
+			const noticeCommentNoInput = $("<input>");
+			noticeCommentNoInput.attr("type","text");
+			noticeCommentNoInput.attr("name","noticeCommentNo");
+			noticeCommentNoInput.val(noticeCommentNo);
+			
+			const noticeRefInput = $("<input type='text' name='noticeRef'>")
+			noticeRefInput.val(noticeNo);
+			const noticeCommentContent = $(obj).parent().prev().children().clone();
+			
+			form.append(noticeCommentNoInput).append(noticeRefInput).append(noticeCommentContent);
+			
+			$("body").append(form);
+			
+			form.submit();
+			
+			/* const newContent = $(obj).parent().prev().children().val();
+			$(obj).parent().prev().prev().text(newContent);
+			
+			$(obj).parent().prev().hide();
+			$(obj).parent().prev().prev().show();
+			
+			$(obj).text("수정");
+			$(obj).attr("onclick","modifyComment(this,"+noticeNo+","+noticeCommentNo+");");
+			
+			$(obj).next().text("삭제");
+			$(obj).next().attr("onclick","deleteComment("+noticeNo+","+noticeCommentNo+");");
+			
+			$(obj).next().next().show(); */
+		}
+		
+		function modifyCancle(obj,noticeNo,noticeCommentNo){
+			$(obj).parent().prev().hide();
+			$(obj).parent().prev().prev().show();
+			
+			$(obj).prev().text("수정");
+			$(obj).prev().attr("onclick","modifyComment(this,"+noticeNo+","+noticeCommentNo+");");
+			
+			$(obj).text("삭제");
+			$(obj).attr("onclick","deleteComment("+noticeNo+","+noticeCommentNo+");");
+			
+			$(obj).next().show();
+		}
+		
+		function deleteComment(noticeNo,noticeCommentNo){
+			if(confirm("댓글을 삭제하시겠습니까?")){
+				location.href="/notice/deleteComment?noticeRef="+noticeNo+"&noticeCommentNo="+noticeCommentNo;
+			}
+		}
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
