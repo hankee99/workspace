@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>게시글 작성</title>
+<style>
+	.photo-write-wrap{
+		width: 1000px;
+		margin: 0 auto;
+	}
+	.photo-write-wrap .input-item>input[type=text]{
+		padding: 0;
+		border-bottom: none;
+	}
+</style>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<main class="content">
+		<section class="section photo-write-wrap">
+			<div class="page-title">글쓰기</div>
+			<form action="/photo/write" method="post" enctype="multipart/form-data">
+				<table class="tbl">
+					<tr>
+						<th>제목</th>
+						<td colspan="3">
+							<div class="input-item">
+								<input type="text" name="photoTitle">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th style="width: 20%;">작성자</th>
+						<td style="width: 30%;">
+							<span th:text="${session.member.memberId}"></span>
+							<input type="hidden" name="photoWriter" th:value="${session.member.memberId}">
+						</td>
+						<th style="width: 20%;">썸네일</th>
+						<td style="width: 30%;">
+							<input type="file" name="imageFile" accept="image/*" onchange="loadImg(this);">
+						</td>
+					</tr>
+					<tr>
+						<th>이미지 미리보기</th>
+						<td colspan="3">
+							<div id="img-viewer">
+								<img id="img-view" width="500px" src="/image/칠할매.jpg">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td colspan="3">
+							<div class="input-item">
+								<textarea name="photoContent"></textarea>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<button class="btn-point lg" type="submit">등록</button>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</section>
+	</main>
+	<script>
+		function loadImg(obj){
+			//매개변수로 받은 obj는 input type="file"인 요소
+			//해당 객체에 files속성에 접근하면 첨부파일 정보를 볼 수 있음
+			console.log(obj.files);
+			//input type="file"에는 multiple옵션이 존재하기 때문에 첨부파일 정보는 여러개를 담을 수 있는 객체
+			//files는 배열과 유사한 형태를 띄는 객체(배열아님) -> forEach사용하면 에러 발생
+			//파일갯수가 0개가 아니라면
+			if(obj.files.length !== 0){
+				//첨부파일이 변경되었을 때
+				//첨부파일이 있는 경로에 접근 불가능 -> 첨부파일의 데이터를 읽어옴
+				const reader = new FileReader();
+				//선택한 파일 정보를 읽어오는 함수
+				reader.readAsDataURL(obj.files[0]);
+				//파일리더가 정보를 다 읽어오면 동작할 함수 작성
+				reader.onload = function(e) {
+					//동작할 함수의 매개변수로 파일에 대한 정보가 들어있음
+					$("#img-view").attr("src", e.target.result);
+				}
+				
+			}else{
+				//첨부파일이 사라졌을 때
+				$("#img-view").attr("src", "/image/칠할매.jpg");
+			}
+		}
+	</script>
+	<th:block th:include="common/footer"></th:block>
+</body>
+</html>

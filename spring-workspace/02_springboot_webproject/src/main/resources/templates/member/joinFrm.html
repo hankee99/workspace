@@ -142,11 +142,12 @@
 		$(".join-btn").on("click", e => {
 			
 		
-			const valid = $(".vaild");
+			const valid = $(".valid");
 			if(valid.length !== 2){
 				alert("입력값을 확인하세요.")
 				e.preventDefault(); //기본이벤트 제거
 			}
+			console.log(valid.length);
 		});
 		
 		/*
