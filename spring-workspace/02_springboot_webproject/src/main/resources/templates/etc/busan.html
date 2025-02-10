@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<main class="content">
+		<section class="section busan-wrap">
+			<div class="page-title">부산맛집 API</div>
+			<table class="tbl tbl-border busan">
+				<tr>
+					<th style="width: 15%;">이미지</th>
+					<th style="width: 15%;">상호명</th>
+					<th style="width: 20%;">주소</th>
+					<th style="width: 15%;">전화번호</th>
+					<th style="width: 35%;">소개</th>
+				</tr>
+			</table>
+			<div class="btn-zone">
+				<button id="more-btn" class="btn-primary lg">더보기</button>
+			</div>
+		</section>
+	</main>
+	<script>
+		let pageNo = 1;
+		$("#more-btn").on("click", () => {
+			$.ajax({
+				url : "/api/busanPlace",
+				type : "get",
+				data : {pageNo : pageNo},
+				success : data => {
+					for(let i=0; i<data.length; i++){
+						const bp = data[i];
+						
+						const tr = $("<tr>");
+						
+						const imgTd = $("<td>");
+						const img = $("<img>");
+						img.attr("src",bp.thumb);
+						img.css("width","100%");
+						imgTd.append(img);
+						
+						const titleTd = $("<td>");
+						titleTd.text(bp.title);
+						
+						const addrTd = $("<td>");
+						addrTd.text(bp.addr);
+						
+						const telTd = $("<td>");
+						telTd.text(bp.tel);
+						
+						const introTd = $("<td>");
+						introTd.text(bp.intro);
+						
+						tr.append(imgTd).append(titleTd).append(addrTd).append(telTd).append(introTd);
+						
+						$(".busan").append(tr);
+						
+					}
+					pageNo++;
+					
+				},
+				error : () => {
+					console.log("에러");
+				}
+			})
+		});
+	</script>
+	<th:block th:include="common/footer"></th:block>
+</body>
+</html>

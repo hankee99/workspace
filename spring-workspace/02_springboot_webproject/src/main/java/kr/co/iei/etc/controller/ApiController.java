@@ -1,13 +1,24 @@
 package kr.co.iei.etc.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import kr.co.iei.util.EmailSender;
 
@@ -77,5 +88,93 @@ public class ApiController {
 		return sb.toString();
 	}
 	
+	@GetMapping(value="/map")
+	public String map() {
+		return "etc/map";
+	}
+	
+	@GetMapping(value="/pay")
+	public String pay() {
+		return "etc/pay";
+	}
+	
+	@GetMapping(value="/busan")
+	public String busan() {
+		return "etc/busan";
+	}
+	
+	@ResponseBody
+	@GetMapping(value="/busanPlace")
+	public List busanPlace(String pageNo) {
+		List list = new ArrayList<BusanPlace>();
+		
+		String url = "https://apis.data.go.kr/6260000/FoodService/getFoodKr";
+		//decode키
+		String serviceKey = "W1ZCRQ2cP3B3n/HX/jijbBrbHIay/EHD9JeTJQv7qoHkwCaUPGpSdeW8rx5lmsf0yiQ8mwAC7zralFU6G0z6cw==";
+		String numOfRows = "10";
+		
+		
+		//XML방식
+//		try {
+//			Document document = Jsoup.connect(url)
+//					.data("serviceKey",serviceKey)
+//					.data("numOfRows",numOfRows)
+//					.data("pageNo",pageNo)
+//					.ignoreContentType(true) //결과타입을 따로 분류하지 않고 우리가 원하는 형태로 사용
+//					.get();
+//			
+//			Elements elements = document.select("item"); //결과로 받은 XML문서 중 item태그만 선택
+//			for(int i=0; i<elements.size(); i++) {
+//				Element item = elements.get(i);
+//				String title = item.select("MAIN_TITLE").text();
+//				String thumb = item.select("MAIN_IMG_THUMB").text();
+//				String addr = item.select("ADDR1").text();
+//				String tel = item.select("CNTCT_TEL").text();
+//				String intro = item.select("ITEMCNTNTS").text();
+//				BusanPlace place = new BusanPlace(title, thumb, addr, tel, intro);
+//				list.add(place);
+//				
+//			}
+//			
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		//JSON방식
+		try {
+			String result = Jsoup.connect(url)
+					.data("serviceKey",serviceKey)
+					.data("numOfRows",numOfRows)
+					.data("pageNo",pageNo)
+					.data("resultType","json")
+					.ignoreContentType(true) //결과타입을 따로 분류하지 않고 우리가 원하는 형태로 사용
+					.get().text();
+			//결과로 받은 문자열을 JSON타입으로 변환(JsonParser)
+			 JsonObject object = (JsonObject)JsonParser.parseString(result);
+			 JsonObject getFoodKr = object.get("getFoodKr").getAsJsonObject();
+			 JsonArray items = getFoodKr.get("item").getAsJsonArray();
+			 for(int i=0; i<items.size(); i++) {
+				 JsonObject item = items.get(i).getAsJsonObject();
+				 String title = item.get("MAIN_TITLE").getAsString();
+				 String thumb = item.get("MAIN_IMG_THUMB").getAsString();
+				 String addr = item.get("ADDR1").getAsString();
+				 String tel = item.get("CNTCT_TEL").getAsString();
+				 String intro = item.get("ITEMCNTNTS").getAsString();
+				 BusanPlace bp = new BusanPlace(title, thumb, addr, tel, intro);
+				 list.add(bp);
+			 }
+			
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+		
+		
+		return list;
+	}
 	
 }

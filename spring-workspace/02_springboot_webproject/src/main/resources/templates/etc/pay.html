@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.pay-wrap{
+		width: 1000px;
+		margin: 0 auto;
+	}
+	.product-wrap{
+		display: flex;
+		justify-content: space-around;
+	}
+	.product-wrap>div{
+		width: 450px;
+		height: 300px;
+	}
+	.product-img>img{
+		width: 100%;
+		height: 100%;
+		object-fit : contain;
+	}
+</style>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<main class="content">
+		<section class="section pay-wrap">
+			<div class="page-title">상품판매</div>
+			<div class="product-wrap">
+				<div class="product-img">
+					<img src="/image/스톱워치.jpg">
+				</div>
+				<div class="product-info">
+					<table class="tbl">
+						<tr>
+							<th class="left" colspan="2">타이무 스토푸!</th>
+						</tr>
+						<tr>
+							<td style="width: 30%;">제조사</td>
+							<td>KH</td>
+						</tr>
+						<tr>
+							<td>가격</td>
+							<td>
+								<span id="product-price">399000</span>
+								<span>원</span>
+							</td>
+						</tr>
+						<tr>
+							<td>주문수량</td>
+							<td>
+								<button class="btn-point sm amount-btn">-</button>
+								<span id="product-amount">1</span>
+								<button class="btn-point sm amount-btn">+</button>
+							</td>
+						</tr>
+						<tr>
+							<td>총가격</td>
+							<td>
+								<span id="total-price">399000</span>
+								<span>원</span>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<button id="buy-btn" class="btn-primary">구매하기</button>
+								<button id="cart-btn" class="btn-point">장바구니</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</section>
+		<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+		<script>
+			$(".amount-btn").on("click", function() {
+				const text = $(this).text();
+				const productPrice = $("#product-price").text();
+				const currentAmount = $("#product-amount").text();
+				if(text === "-"){
+					if(currentAmount === "1"){
+						alert("최소 주문수량은 1개입니다.")
+						return;
+					}
+					const newAmount = Number(currentAmount) - 1;
+					$("#product-amount").text(newAmount);
+					const newPrice = newAmount * Number(productPrice);
+					$("#total-price").text(newPrice);
+				}else if(text === "+"){
+					const newAmount = Number(currentAmount) + 1;
+					$("#product-amount").text(newAmount);
+					const newPrice = newAmount * Number(productPrice);
+					$("#total-price").text(newPrice);
+				}
+			});
+			
+			$("#buy-btn").on("click", () => {
+				const totalPrice = $("#total-price").text();
+				const date = new Date();
+				const dateString = date.getFullYear() + "" + (date.getMonth()+1) + ""+date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
+				IMP.init("imp38620780");
+				
+				IMP.request_pay(
+						  {
+						    channelKey: "channel-key-fd375ed5-d614-4c0e-89e4-2d153fc75194",
+						    pay_method: "card",
+						    merchant_uid: "order_no_"+dateString, //상점에서 생성한 고유 주문번호
+						    name: "주문명:결제테스트",
+						    amount: totalPrice,
+						    buyer_email: "test@portone.io",
+						    buyer_name: "구매자이름",
+						    buyer_tel: "010-1234-5678", //필수 파라미터 입니다.
+						    buyer_addr: "서울특별시 강남구 삼성동",
+						    buyer_postcode: "123-456",
+						  },
+						  function (rsp) {
+							  if(rsp.success){
+								  //데이터베이스에 기록할 데이터를 취합해서 insert하는 로직
+							  }
+						    // callback 로직
+						    //* ...중략... *//
+						  },
+						);
+			});
+		</script>
+		
+	</main>
+	<th:block th:include="common/footer"></th:block>
+</body>
+</html>

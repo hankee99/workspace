@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+.map-wrap {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.address-wrap {
+	width: 500px;
+}
+</style>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<main class="content">
+		<section class="section map-wrap">
+			<div class="page-title">지도 API</div>
+
+			<h2>1. 주소찾기 API</h2>
+			<div class="address-wrap">
+				<div class="post-code-wrap">
+					<div class="input-item">
+						<input type="text" name="postcode" id="postcode" readonly>
+						<button class="btn-primary" id="search-btn">주소찾기</button>
+					</div>
+				</div>
+				<div class="detail-address-wrap">
+					<div class="input-item">
+						<input type="text" name="address" id="address">
+					</div>
+					<div class="input-item">
+						<input type="text" name="detail-address" id="detail-address">
+					</div>
+				</div>
+			</div>
+			<h2>2. 네이버지도</h2>
+			<div id="map" style="width: 100%; height: 500px;">
+				
+			</div>
+
+		</section>
+	</main>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=v9yjcpgnql&submodules=geocoder"></script>
+	<script>
+		$("#search-btn").on("click", () => {
+			new daum.Postcode({
+		        oncomplete: function(data) {
+		            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+		            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+		            $("#postcode").val(data.zonecode);
+		            $("#address").val(data.roadAddress);
+		            $("#detail-address").focus();
+		        }
+		    }).open();
+		});
+		
+		const map = new naver.maps.Map("map",{
+			center : new naver.maps.LatLng(37.5306468, 126.9761836),
+			zoom : 18,
+			zoomControl : true,
+			zoomControlOptions : {
+				position : naver.maps.Position.TOP_RIGHT,
+				style : naver.maps.ZoomControlStyle.SMALL
+			}
+		});
+		const marker = new naver.maps.Marker({
+			position : new naver.maps.LatLng(37.5306468, 126.9761836),
+			map : map
+		});
+		
+		let contentString = [
+			"<div class='iw-inner'>",
+			"<h3>윤석열 집</h3>",
+			"<p>서울특별시 용산구 이태원로 22</p>",
+			"</div>"
+		].join("");
+		
+		let infoWindow = new naver.maps.InfoWindow();
+		//마커에 클릭이벤트 적용
+		naver.maps.Event.addListener(marker,"click", e => {
+			infoWindow = new naver.maps.InfoWindow({
+				content : contentString
+			});
+			infoWindow.open(map,marker);
+		});
+		//map에 클릭이벤트
+		naver.maps.Event.addListener(map,"click", e => {
+			map.setCenter(e.coord);
+			marker.setPosition(e.coord);
+			if(infoWindow.getMap()){ //infoWindow가 열려있으면
+				infoWindow.close(); //닫아라
+			}
+			//클릭한 위치의 위/경도를 매개변수로 받은 event를 통해서 구할 수 있음
+			//위/경도 정보로 주소를 조회 -> reverse geocode
+			//주소를 통해서 위/경도 정보조회 -> geocode
+			naver.maps.Service.reverseGeocode({
+				location : e.coord
+			}, (status, response) => {
+				if(status != naver.maps.Service.Status.OK){
+					alert("주소를 찾을 수 없습니다.");
+					return;
+				}
+				
+				const address = response.result.items[1].address;
+				contentString = [
+					"<div class='iw-inner'>",
+					"<p>"+address+"</p>",
+					"</div>"
+				].join("");
+			});
+		});
+	</script>
+	<th:block th:include="common/footer"></th:block>
+</body>
+</html>

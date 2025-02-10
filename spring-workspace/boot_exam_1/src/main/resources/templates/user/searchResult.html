@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Insert title here</title>
+
+</head>
+
+<body>
+
+	<h1>회원 조회 결과</h1>
+
+	<hr>
+
+	<ul>
+
+		<li>회원번호 : <span th:text="${u.userNo}"></span></li>
+
+		<li>회원이름 : <span th:text="${u.userName}"></span></li>
+
+		<li>회원나이 : <span th:text="${u.userAge}"></span></li>
+
+		<li>회원성별 : <span th:text="${u.userGender}"></span></li>
+
+		<li>회원혈액형 : <span th:text="${u.bloodType}"></span></li>
+
+	</ul>
+
+</body>
+
+</html>
