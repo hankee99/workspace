@@ -18,6 +18,8 @@ public class NoticeCommentRowMapper implements RowMapper<NoticeComment>{
 		nc.setNoticeCommentRef(rs.getInt("notice_comment_ref"));
 		nc.setNoticeCommentWriter(rs.getString("notice_comment_writer"));
 		nc.setNoticeRef(rs.getInt("notice_ref"));
+		nc.setLikeCount(rs.getInt("like_count"));
+		nc.setIsLike(rs.getInt("is_like"));
 		return nc;
 	}
 	

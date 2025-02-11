@@ -133,16 +133,26 @@ public class NoticeDao {
 		return result;
 	}
 
-	public List selectNoticeCommentList(int noticeNo) {
-		String query = "select * from notice_comment where notice_ref = ? and notice_comment_ref is null order by 1";
-		Object[] params = {noticeNo};
+	public List selectNoticeCommentList(int noticeNo, int memberNo) {
+		String query = "select\r\n"
+				+ "nc.* ,\r\n"
+				+ "(select count(*) from notice_comment_like where notice_comment_no = nc.notice_comment_no) like_count,\r\n"
+				+ "(select count(*) from notice_comment_like where notice_comment_no = nc.notice_comment_no and member_no = ?) is_like\r\n"
+				+ "from notice_comment nc\r\n"
+				+ "where notice_ref = ? and notice_comment_ref is null order by 1";
+		Object[] params = {memberNo,noticeNo};
 		List list = jdbc.query(query, noticeCommentRowMapper, params);
 		return list;
 	}
 
-	public List selectNoticeReCommentList(int noticeNo) {
-		String query = "select * from notice_comment where notice_ref = ? and notice_comment_ref is not null order by 1";
-		Object[] params = {noticeNo};
+	public List selectNoticeReCommentList(int noticeNo, int memberNo) {
+		String query = "select\r\n"
+				+ "nc.* ,\r\n"
+				+ "(select count(*) from notice_comment_like where notice_comment_no = nc.notice_comment_no) like_count,\r\n"
+				+ "(select count(*) from notice_comment_like where notice_comment_no = nc.notice_comment_no and member_no = ?) is_like\r\n"
+				+ "from notice_comment nc\r\n"
+				+ "where notice_ref = ? and notice_comment_ref is not null order by 1";
+		Object[] params = {memberNo,noticeNo};
 		List list = jdbc.query(query, noticeCommentRowMapper, params);
 		return list;
 	}
@@ -159,5 +169,26 @@ public class NoticeDao {
 		Object[] params = {nc.getNoticeCommentContent(),nc.getNoticeCommentNo()};
 		int result = jdbc.update(query,params);
 		return result;
+	}
+
+	public int insertNoticeCommentLike(int noticeCommentNo, int memberNo) {
+		String query = "insert into notice_comment_like values(?,?)";
+		Object[] params = {noticeCommentNo,memberNo};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+
+	public int deleteNoticeCommentLike(int noticeCommentNo, int memberNo) {
+		String query = "delete from notice_comment_like where notice_comment_no = ? and member_no = ?";
+		Object[] params = {noticeCommentNo,memberNo};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+
+	public int selectNoticeCommentLikeCount(int noticeCommentNo) {
+		String query = "select count(*) from notice_comment_like where notice_comment_no = ?";
+		Object[] params = {noticeCommentNo};
+		int likeCount = jdbc.queryForObject(query, Integer.class, params);
+		return likeCount;
 	}
 }

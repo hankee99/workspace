@@ -41,7 +41,7 @@
 				</tr>
 				<tr>
 					<td class="left" colspan="6">
-						<div class="noticeContent" th:text="${n.noticeContent}"></div>
+						<div class="noticeContent" th:utext="${n.noticeContent}"></div>
 					</td>
 				</tr>
 				<tr th:if="${session.member != null && session.member.memberId == n.noticeWriter}">
@@ -81,6 +81,12 @@
 				  	<p class="comment-info">
 				  		<span th:text="${nc.noticeCommentWriter}"></span>
 				  		<span th:text="${nc.noticeCommentDate}"></span>
+				  		<span class="like-box">
+				  			<span th:if="${nc.isLike == 1}" class="material-icons" th:onclick="likepush(this,[[${nc.noticeCommentNo}]]);">thumb_up</span>
+				  			<span th:if="${session.member != null && nc.isLike == 0}" class="material-icons" th:onclick="likepush(this,[[${nc.noticeCommentNo}]]);">thumb_up_off_alt</span>
+				  			<span th:if="${session.member == null}" class="material-icons" onclick="loginMsg();">thumb_up_off_alt</span>
+				  			<span th:text="${nc.likeCount}"></span>
+				  		</span>
 				  	</p>
 				  	<p class="comment-content" th:text="${nc.noticeCommentContent}"></p>
 				  	<div class="input-item" style="display: none;" th:if="${session.member != null && session.member.memberId == nc.noticeCommentWriter}">
@@ -107,6 +113,12 @@
 				  	<p class="comment-info">
 				  		<span th:text="${ncc.noticeCommentWriter}"></span>
 				  		<span th:text="${ncc.noticeCommentDate}"></span>
+				  		<span class="like-box">
+				  			<span th:if="${ncc.isLike == 1}" class="material-icons" th:onclick="likepush(this,[[${ncc.noticeCommentNo}]]);">thumb_up</span>
+				  			<span th:if="${session.member != null && ncc.isLike == 0}" class="material-icons" th:onclick="likepush(this,[[${ncc.noticeCommentNo}]]);">thumb_up_off_alt</span>
+				  			<span th:if="${session.member == null}" class="material-icons" onclick="loginMsg();">thumb_up_off_alt</span>
+				  			<span th:text="${ncc.likeCount}"></span>
+				  		</span>
 				  	</p>
 				  	<p class="comment-content" th:text="${ncc.noticeCommentContent}"></p>
 				  	<div class="input-item" style="display: none;" th:if="${session.member != null && session.member.memberId == ncc.noticeCommentWriter}">
@@ -242,6 +254,31 @@
 			$(obj).next().attr("onclick","deleteComment("+noticeNo+","+noticeCommentNo+");");
 			
 			$(obj).next().next().show(); */
+		}
+		
+		function loginMsg(){
+			alert("로그인은 하고와라;;")
+		}
+		
+		function likepush(obj,noticeCommentNo){
+			//thumb_up   thumb_up_off_alt
+			//현재 상태를 구분
+			const currentText = $(obj).text();
+			const isLike = (currentText === "thumb_up_off_alt") ? 0 : 1;
+			$.ajax({
+				url : "/notice/likepush",
+				data : {noticeCommentNo : noticeCommentNo, isLike : isLike},
+				type : "post",
+				success : data => {
+					if(isLike === 0){
+						$(obj).text("thumb_up");	
+					}else{
+						$(obj).text("thumb_up_off_alt");
+					}
+					$(obj).next().text(data);
+					
+				}
+			})
 		}
 		
 		function modifyCancle(obj,noticeNo,noticeCommentNo){

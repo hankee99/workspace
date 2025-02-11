@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.co.iei.member.model.vo.Member;
 import kr.co.iei.notice.model.service.NoticeService;
 import kr.co.iei.notice.model.vo.Notice;
 import kr.co.iei.notice.model.vo.NoticeComment;
@@ -19,6 +20,8 @@ import kr.co.iei.notice.model.vo.NoticeListData;
 import kr.co.iei.util.FileUtils;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -93,8 +96,12 @@ public class NoticeController {
 	}
 	
 	@GetMapping(value="/view")
-	public String selectOneNotice(int noticeNo,String check, Model model) {
-		Notice n = noticeService.selectOneNotice(noticeNo,check);
+	public String selectOneNotice(int noticeNo,String check, Model model, @SessionAttribute(required = false) Member member) { //required=false 로그인X -> null
+		int memberNo = 0;
+		if(member != null) {
+			memberNo = member.getMemberNo();
+		}
+		Notice n = noticeService.selectOneNotice(noticeNo, memberNo,check);
 		if(n == null) {
 			model.addAttribute("title", "게시글 조회실패");
 			model.addAttribute("text", "존재하지 않는 게시물입니다.");
@@ -137,7 +144,7 @@ public class NoticeController {
 	
 	@GetMapping(value="/updateFrm")
 	public String updateFrm(int noticeNo, Model model) {
-		Notice n = noticeService.selectOneNotice(noticeNo, "1");
+		Notice n = noticeService.selectOneNotice(noticeNo, 0, "1");
 		model.addAttribute("n",n);
 		return "notice/updateFrm";
 	}
@@ -184,6 +191,27 @@ public class NoticeController {
 		int result = noticeService.updateNoticeComment(nc);
 		return "redirect:/notice/view?noticeNo=" + nc.getNoticeRef() + "&check=1";
 	}
+	
+	@GetMapping(value="/writeFrmEditor")
+	public String writeFrmEditor() {
+		return "notice/writeFrmEditor";
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/editorImage", produces = "plain/text;charset=utf-8")
+	public String editorImage(MultipartFile upfile) {
+		String savepath = root + "/notice/editor/";
+		String filepath = fileUtils.upload(savepath, upfile);
+		return filepath;
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/likepush")
+	public int likepush(NoticeComment nc, @SessionAttribute Member member) {
+		int result = noticeService.likepush(nc,member.getMemberNo());
+		return result;
+	}
+	
 	
 	
 	

@@ -14,4 +14,6 @@ public class NoticeComment {
 	private String noticeCommentDate;
 	private int noticeRef;
 	private int noticeCommentRef;
+	private int likeCount;
+	private int isLike;
 }

@@ -25,7 +25,7 @@
 		<section class="section notice-list-wrap">
 			<div class="page-title">공지사항</div>
 			<div class="list-header">
-				<a th:if="${session.member != null && session.member.memberLevel == 1}" href="/notice/writeFrm" class="btn-primary" id="write-btn">글쓰기</a>
+				<a th:if="${session.member != null && session.member.memberLevel == 1}" href="/notice/writeFrmEditor" class="btn-primary" id="write-btn">글쓰기</a>
 			</div>
 			<div class="list-tbl-wrap">
 				<table class="tbl tbl-hover">

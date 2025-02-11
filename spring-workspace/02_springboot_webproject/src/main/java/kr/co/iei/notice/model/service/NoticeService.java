@@ -116,7 +116,7 @@ public class NoticeService {
 	}
 	
 	@Transactional
-	public Notice selectOneNotice(int noticeNo, String check) {
+	public Notice selectOneNotice(int noticeNo, int memberNo, String check) {
 		Notice n = noticeDao.selectOneNotice(noticeNo);
 		if(n != null) {
 			if(check == null) {
@@ -127,10 +127,10 @@ public class NoticeService {
 			List fileList = noticeDao.selectNoticeFile(noticeNo);
 			n.setFileList(fileList);
 			//댓글 조회
-			List commentList = noticeDao.selectNoticeCommentList(noticeNo);
+			List commentList = noticeDao.selectNoticeCommentList(noticeNo, memberNo);
 			n.setCommentList(commentList);
 			//대댓 조회
-			List reCommentList = noticeDao.selectNoticeReCommentList(noticeNo);
+			List reCommentList = noticeDao.selectNoticeReCommentList(noticeNo, memberNo);
 			n.setReCommentList(reCommentList);
 		}
 		return n;
@@ -187,6 +187,21 @@ public class NoticeService {
 	public int updateNoticeComment(NoticeComment nc) {
 		int result = noticeDao.updateNoticeComment(nc);
 		return result;
+	}
+	
+	@Transactional
+	public int likepush(NoticeComment nc, int memberNo) {
+		if(nc.getIsLike() == 0) {
+			//현재값 == 0 좋아요를 누르는 경우 -> insert
+			int result = noticeDao.insertNoticeCommentLike(nc.getNoticeCommentNo(), memberNo);
+		}else {
+			//현재값 == 1 좋아요를 취소하는 경우 -> delete
+			int result = noticeDao.deleteNoticeCommentLike(nc.getNoticeCommentNo(), memberNo);
+		}
+		//좋아요, 좋아요 취소 로직을 수행하고나면 현재 좋아요 개수 조회해서 리턴
+		int likeCount = noticeDao.selectNoticeCommentLikeCount(nc.getNoticeCommentNo());
+		
+		return likeCount;
 	}
 	
 }

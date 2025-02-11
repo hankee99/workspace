@@ -19,4 +19,8 @@ public class Notice {
 	private List<NoticeFile> fileList;
 	private List<NoticeComment> commentList;
 	private List<NoticeComment> reCommentList;
+	
+//	public String getNoticeContentBr() {
+//		return noticeContent.replaceAll("\n", "<br>");
+//	}
 }
